@@ -6,70 +6,85 @@ import modelo.Intento;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class Controller {
 
-	int numeroAdivinar;
+	private int numeroAdivinar;
+
+	private int contadorIntentos;
+	Intento[] intentos = new Intento[100];
+	private String respuestaMaquina;
 
 	@FXML
-	TextField min;
+	TextField fxml_min;
 	@FXML
-	TextField max;
+	TextField fxml_max;
 	@FXML
-	TextField infoGenerar;
+	Label fxml_infoGenerar;
+	@FXML
+	Button fxml_btnGenerar;
+	@FXML
+	TextField fxml_numeroJugado;
+	@FXML
+	Button fxml_btnJugar;
+	@FXML
+	Button fxml_btnIntentos;
+	@FXML
+	TextArea fxml_infoJugada;
 
 	public void botonGenerar(ActionEvent evt) {
-		String numTemp;
 		try {
-			if (min.getText().isEmpty() || max.getText().isEmpty()) {
-				infoGenerar.setText("Debe introducir dos valores.");
+			if (fxml_min.getText().isEmpty() || fxml_max.getText().isEmpty()) {
+				fxml_infoGenerar.setText("Debe introducir dos valores.");
 			}
-			numTemp = min.getText();
-			int minimo = Integer.parseInt(numTemp);
-			numTemp = max.getText();
-			int maximo = Integer.parseInt(numTemp);
+			int minimo = Integer.parseInt(fxml_min.getText());
+			int maximo = Integer.parseInt(fxml_max.getText());
 			if (minimo >= maximo) {
-				infoGenerar.setText("Mínimo debe ser menor que máximo.");
+				fxml_infoGenerar.setText("Mínimo debe ser menor que máximo.");
 			} else {
-				infoGenerar.setText(
-						"Rango elegido: " + min.getText() + " y " + max.getText() + ", ya puede comenzar a jugar.");
+				fxml_infoGenerar.setText("Rango elegido: " + fxml_min.getText() + " y " + fxml_max.getText()
+						+ ", ya puede comenzar a jugar.");
 				numeroAdivinar = generarAleatorioEntre(minimo, maximo);
+				fxml_btnGenerar.setDisable(true);
+				fxml_numeroJugado.setDisable(false);
+				fxml_btnJugar.setDisable(false);
+				fxml_infoJugada.setDisable(false);
 			}
 		} catch (NumberFormatException e) {
-			infoGenerar.setText("Error de formato.");
+			fxml_infoGenerar.setText("Error de formato.");
 		}
 	}
 
-	@FXML
-	TextArea infoJugar;
-	@FXML
-	TextField numeroJugado;
-
-	int contadorIntentos;
-	Intento[] intentos = new Intento[10];
-
 	public void botonJugar(ActionEvent evt) {
-		String jugadoTemp;
-		jugadoTemp = numeroJugado.getText();
-		int numJugado = Integer.parseInt(jugadoTemp);
-		Intento intento = new Intento(numJugado, new Date());
-
-		intentos[contadorIntentos++] = intento;
+		int numJugado = Integer.parseInt(fxml_numeroJugado.getText());
+		fxml_btnIntentos.setDisable(false);
 		if (numJugado < numeroAdivinar) {
-			infoJugar.setText("Pruebe un numero mayor.");
+			respuestaMaquina = "Pruebe un numero mayor.\n";
+			fxml_infoJugada.appendText(respuestaMaquina);
 		} else if (numJugado > numeroAdivinar) {
-			infoJugar.setText("Pruebe un numero menor.");
+			respuestaMaquina = "Pruebe un numero menor.\n";
+			fxml_infoJugada.appendText(respuestaMaquina);
 		} else {
-			infoJugar.setText("Enhorabuena, has acertado! " + numeroAdivinar);
+			respuestaMaquina = "¡Ha acertado!\n";
+			fxml_infoJugada.appendText("**************************\nEnhorabuena, has acertado! " + numeroAdivinar
+					+ "\n**************************\n");
+			fxml_btnGenerar.setDisable(true);
+			fxml_numeroJugado.setDisable(true);
+			fxml_btnJugar.setDisable(true);
 		}
+		Intento intento = new Intento(numJugado, new Date(), respuestaMaquina);
+		intentos[contadorIntentos++] = intento;
 	}
 
 	public void verIntentos() {
-		infoJugar.setText("Sus intentos han sido:");
+		fxml_infoJugada.appendText("Sus intentos han sido:\n");
 		for (int i = 0; i < intentos.length; i++) {
 			try {
-				infoJugar.setText((i + 1) + " " + intentos[i].getNumero() + " " + intentos[i].getFechaHora() + " ->" + " ");
+				fxml_infoJugada.appendText((i + 1) + " " + intentos[i].getNumero() + " " + intentos[i].getFechaHora()
+						+ " -> " + intentos[i].getRespuestaMaquina());
 			} catch (NullPointerException e) {
 				break;
 			}
