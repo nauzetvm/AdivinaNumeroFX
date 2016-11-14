@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
    	  <Label layoutX="110.0" layoutY="20.0" text="Adivinar Numero" />
       <TextField fx:id="fxml_min" alignment="CENTER" layoutX="49.0" layoutY="60.0" prefHeight="25.0" prefWidth="61.0" promptText="mínimo" />
@@ -20,5 +20,6 @@
       <Button fx:id="fxml_btnJugar" disable="true" layoutX="80.0" layoutY="242.0" mnemonicParsing="false" onAction="#botonJugar" text="Jugar" textAlignment="CENTER" /> 
       <Button fx:id="fxml_btnIntentos" disable="true" layoutX="154.0" layoutY="242.0" mnemonicParsing="false" onAction="#verIntentos" text="Ver intentos" textAlignment="CENTER" />
       <TextArea fx:id="fxml_infoJugada" editable="false" layoutX="38.0" layoutY="283.0" prefHeight="121.0" prefWidth="235.0" />
+      <Button fx:id="fxml_btnVolverJugar" disable="true" layoutX="106.0" layoutY="420.0" mnemonicParsing="false" onAction="#botonVolverJugar" text="Volver a jugar" />
    </children>
 </AnchorPane>

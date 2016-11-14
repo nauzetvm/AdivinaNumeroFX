@@ -34,7 +34,9 @@ public class Controller {
 	Button fxml_btnIntentos;
 	@FXML
 	TextArea fxml_infoJugada;
-
+	@FXML
+	Button fxml_btnVolverJugar;
+	
 	public void botonGenerar(ActionEvent evt) {
 		try {
 			if (fxml_min.getText().isEmpty() || fxml_max.getText().isEmpty()) {
@@ -74,9 +76,18 @@ public class Controller {
 			fxml_btnGenerar.setDisable(true);
 			fxml_numeroJugado.setDisable(true);
 			fxml_btnJugar.setDisable(true);
+			fxml_btnVolverJugar.setDisable(false);
 		}
 		Intento intento = new Intento(numJugado, new Date(), respuestaMaquina);
 		intentos[contadorIntentos++] = intento;
+	}
+
+	public void botonVolverJugar(ActionEvent evt) {
+		fxml_btnGenerar.setDisable(false);
+		fxml_btnJugar.setDisable(true);
+		fxml_btnIntentos.setDisable(true);
+		fxml_btnVolverJugar.setDisable(true);
+		
 	}
 
 	public void verIntentos() {
